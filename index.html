@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flashcards</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <div class="header-spacer"></div>
+        <h1 class="app-name">Flashcards</h1>
+        <div class="header-actions">
+          <button class="btn-new-deck" id="btn-new-deck">New Deck</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <ul class="deck-list" id="deck-list">
+          <li class="deck-item active">French pastries</li>
+          <li class="deck-item">Russian words</li>
+          <li class="deck-item">Traditional dishes</li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <div class="deck-header">
+          <h2 class="deck-title">French pastries</h2>
+          <div class="toolbar">
+            <button class="btn-toolbar" id="btn-edit-deck" disabled>
+              Edit Deck
+            </button>
+            <button class="btn-toolbar" id="btn-delete-deck" disabled>
+              Delete Deck
+            </button>
+            <div class="search-wrap">
+              <label for="card-search" class="sr-only">Search cards</label>
+              <input
+                id="card-search"
+                class="search-input"
+                type="search"
+                placeholder="Search cards…"
+              />
+            </div>
+            <button class="btn-toolbar" id="btn-shuffle">
+              &#x1F500; Shuffle
+            </button>
+            <button class="btn-toolbar btn-primary" id="btn-new-card">
+              + New Card
+            </button>
+          </div>
+        </div>
+
+        <!-- Card area -->
+        <div class="card-area">
+          <div class="card-counter">Card 1 of 5</div>
+
+          <div class="card" id="flashcard">
+            <div class="card-inner">
+              <div class="card-face card-front">
+                <span>Croissant</span>
+              </div>
+              <div class="card-face card-back">
+                <span
+                  >A buttery, flaky, crescent-shaped pastry of Austrian origin,
+                  popularised in France.</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="card-controls">
+            <button class="btn-control" id="btn-prev">&#8592; Prev</button>
+            <button class="btn-control btn-flip" id="btn-flip">
+              &#x21C4; Flip
+            </button>
+            <button class="btn-control" id="btn-next">Next &#8594;</button>
+          </div>
+
+          <div class="card-actions">
+            <button class="btn-control-secondary" id="btn-edit-card">
+              Edit Card
+            </button>
+            <button
+              class="btn-control-secondary btn-danger"
+              id="btn-delete-card"
+            >
+              Delete Card
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <p class="footer-welcome">
+        Welcome to World Flavors Flashcards! Explore the delicious world of
+        French pastries, traditional dishes, and Russian vocabulary.
+      </p>
+    </footer>
+
+    <div class="modal-overlay hidden" id="new-deck-modal" aria-hidden="true">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="new-deck-title"
+      >
+        <h3 class="modal-title" id="new-deck-title">Create New Deck</h3>
+        <form id="new-deck-form" class="modal-form">
+          <label for="deck-name" class="modal-label">Deck name</label>
+          <input
+            id="deck-name"
+            class="modal-input"
+            type="text"
+            maxlength="40"
+            placeholder="e.g. Italian desserts"
+            required
+          />
+          <p class="modal-error" id="deck-name-error" aria-live="polite"></p>
+          <div class="modal-actions">
+            <button type="button" class="btn-toolbar" id="btn-cancel-new-deck">
+              Cancel
+            </button>
+            <button type="submit" class="btn-toolbar btn-primary">
+              Create Deck
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="new-card-modal" aria-hidden="true">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="new-card-title"
+      >
+        <h3 class="modal-title" id="new-card-title">Create New Card</h3>
+        <form id="new-card-form" class="modal-form">
+          <label for="card-front-input" class="modal-label">Front</label>
+          <input
+            id="card-front-input"
+            class="modal-input"
+            type="text"
+            maxlength="120"
+            placeholder="Enter card front"
+            required
+          />
+
+          <label for="card-back-input" class="modal-label">Back</label>
+          <input
+            id="card-back-input"
+            class="modal-input"
+            type="text"
+            maxlength="220"
+            placeholder="Enter card back"
+            required
+          />
+
+          <p class="modal-error" id="new-card-error" aria-live="polite"></p>
+
+          <div class="modal-actions">
+            <button type="button" class="btn-toolbar" id="btn-cancel-new-card">
+              Cancel
+            </button>
+            <button type="submit" class="btn-toolbar btn-primary">
+              Create Card
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="edit-card-modal" aria-hidden="true">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="edit-card-title"
+      >
+        <h3 class="modal-title" id="edit-card-title">Edit Card</h3>
+        <form id="edit-card-form" class="modal-form">
+          <label for="edit-card-front-input" class="modal-label">Front</label>
+          <input
+            id="edit-card-front-input"
+            class="modal-input"
+            type="text"
+            maxlength="120"
+            placeholder="Enter card front"
+            required
+          />
+
+          <label for="edit-card-back-input" class="modal-label">Back</label>
+          <input
+            id="edit-card-back-input"
+            class="modal-input"
+            type="text"
+            maxlength="220"
+            placeholder="Enter card back"
+            required
+          />
+
+          <p class="modal-error" id="edit-card-error" aria-live="polite"></p>
+
+          <div class="modal-actions">
+            <button type="button" class="btn-toolbar" id="btn-cancel-edit-card">
+              Cancel
+            </button>
+            <button type="submit" class="btn-toolbar btn-primary">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
